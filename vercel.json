@@ -1,0 +1,14 @@
+{
+  "rewrites": [
+    { "source": "/retail", "destination": "/index.html" },
+    { "source": "/retail/admin", "destination": "/index.html" },
+    { "source": "/wholesale", "destination": "/index.html" },
+    { "source": "/wholesale/supplier", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+    }
+  ]
+}
