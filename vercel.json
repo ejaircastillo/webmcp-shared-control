@@ -3,6 +3,7 @@
   "framework": null,
   "buildCommand": "",
   "rewrites": [
+    { "source": "/favicon.ico", "destination": "/favicon.svg" },
     { "source": "/retail", "destination": "/index.html" },
     { "source": "/retail/admin", "destination": "/index.html" },
     { "source": "/wholesale", "destination": "/index.html" },
