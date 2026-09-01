@@ -1283,6 +1283,8 @@ function updateCatalogList(selector, html) {
 function bindEvents() {
   const app = document.querySelector("#app");
   if (!app) return;
+  if (app.dataset.eventsBound === "true") return;
+  app.dataset.eventsBound = "true";
   app.addEventListener("click", (event) => {
     const actionTarget = event.target.closest("[data-action]");
     if (actionTarget) void handleAction(actionTarget);
