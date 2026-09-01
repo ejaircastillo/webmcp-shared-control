@@ -1,0 +1,11 @@
+{
+  "name": "webmcp-shared-control",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A shared human-agent workspace for WebMCP demos.",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs"
+  }
+}
