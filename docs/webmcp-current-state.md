@@ -209,7 +209,7 @@ This Playwright run validates the visible application behavior only. Its normal 
 ### Remaining acceptance blockers
 
 - The ChatGPT Desktop browser-control runtime still fails before connecting with `windows sandbox failed: helper_unknown_error: apply deny-read ACLs`. Therefore the Milestone 0 record remains FAIL/BLOCKED and no native Site-tool PASS claim is made.
-- A hosted public deployment and the required sub-three-minute demo video remain to be completed before a final challenge submission.
+- The hosted public deployment is ready. The required sub-three-minute demo video and native Site-tools evidence remain before a final challenge submission.
 
 
 ## Hosting verification
@@ -221,8 +221,9 @@ The demo is deployed to Vercel and connected to the public GitHub repository:
 
 - Production URL: https://webmcp-shared-control.vercel.app/
 - Judging routes: `/retail`, `/retail/admin`, `/wholesale`, `/wholesale/supplier`
-- Latest production deployment: `dpl_DgThKKyAVpcySYyx4oEbUC4W8e4K`
-- Latest source commit at deployment: `97f193c`
+- Verified production deployment at record time: `dpl_DgThKKyAVpcySYyx4oEbUC4W8e4K`
+- Source commit verified at that deployment: `97f193c`
+- Subsequent Git-connected production redeploys were also reported Ready; the canonical alias was rechecked after the final source/documentation pushes.
 - The static Vercel configuration fixes framework detection with `"framework": null` and an empty build command, then serves the root SPA through explicit route rewrites. A favicon rewrite was added after the first public browser check.
 
 External checks on 2026-09-01 returned HTTP 200 for the home page, all four judging routes, `app.js`, `styles.css`, and `favicon.ico`. Playwright loaded the public `/retail` page with the expected catalog, cart, and route navigation; the final console check reported zero errors and zero warnings.
