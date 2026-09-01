@@ -133,3 +133,39 @@ The proof is two top-level applications using the same ChatGPT conversation:
 2. local wholesale procurement.
 
 Both end with persisted application-side consequences visible from the business side.
+
+
+## Milestone 0 verification record
+
+> Recorded: 2026-09-01  
+> Status: **FAIL / BLOCKED — native Site-tools verification not completed**
+
+### Required first handoff
+
+- Native Site-tools/WebMCP verification: **FAIL (environment blocker)**
+- Environment intended: ChatGPT Desktop built-in browser, top-level local page at `http://127.0.0.1:4173/`
+- Current API shape verified: top-level JavaScript registration with `document.modelContext.registerTool({ name, description, inputSchema, annotations, execute })`
+- Read tool implemented: `get_demo_state` (read-only)
+- Mutation tool implemented: `set_demo_state` (safe target-state mutation, 0–100)
+- Visible page-state mutation confirmed: **not verified in the ChatGPT built-in browser**; the page includes a normal human control and visible state rendering for the pending test
+- ChatGPT discovery confirmed: **not verified**
+- Known limitations from current official docs: the ChatGPT built-in browser currently does not expose declarative form-attribute tools or tools registered inside iframes; tools must be registered in the top-level page
+- Repository / branch / commit: `ejaircastillo/webmcp-shared-control` / `main` / `6492918` (server artifact; page artifact commit `81dc02a`)
+- Next step: restore the browser-control runtime, open the top-level test page in ChatGPT Desktop, inspect the Site tools indicator, execute `get_demo_state`, execute `set_demo_state`, confirm the visible value changes, then update this record to PASS with evidence
+
+### Environment blocker
+
+The browser-control runtime could not start. `mcp__node_repl__js` exited before connecting with:
+
+```text
+windows sandbox failed: helper_unknown_error: apply deny-read ACLs
+```
+
+A minimal runtime probe and a kernel reset were both attempted; the same error persisted. No discovery or tool execution claim is being made from this environment.
+
+### References checked
+
+- [OpenAI Site tools documentation](https://learn.chatgpt.com/docs/webmcp)
+- [OpenAI WebMCP Challenge](https://openai.com/webmcp-challenge/)
+- [WebMCP Challenge official rules](https://webmcp.devpost.com/rules)
+- [Chrome WebMCP developer guide](https://developer.chrome.com/docs/ai/webmcp)
