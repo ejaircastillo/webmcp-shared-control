@@ -1,4 +1,7 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "",
   "rewrites": [
     { "source": "/retail", "destination": "/index.html" },
     { "source": "/retail/admin", "destination": "/index.html" },
