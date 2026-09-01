@@ -169,3 +169,44 @@ A minimal runtime probe and a kernel reset were both attempted; the same error p
 - [OpenAI WebMCP Challenge](https://openai.com/webmcp-challenge/)
 - [WebMCP Challenge official rules](https://webmcp.devpost.com/rules)
 - [Chrome WebMCP developer guide](https://developer.chrome.com/docs/ai/webmcp)
+
+
+## MVP implementation and UI validation
+
+> Recorded: 2026-09-01  
+> Status: **IMPLEMENTED / UI-VALIDATED — native Site-tools verification still blocked**
+
+The standalone target repository is now public at `ejaircastillo/webmcp-shared-control`, with an MIT license and a zero-build Node/vanilla-JS demo. The implementation is published on `main`:
+
+- MVP implementation: `33fac50` — retail and wholesale shared-control vertical slices.
+- Event-binding fix: `cdabb91` — delegated UI listeners are bound once per page shell; this prevents duplicate checkout actions after re-render.
+- Routes: `/`, `/retail`, `/retail/admin`, `/wholesale`, and `/wholesale/supplier`.
+- The page is top-level and registers route-specific tools through `document.modelContext.registerTool` when the host exposes the API. No iframe-only tools or custom LLM are required.
+
+### Implemented tool catalogs
+
+- Retail: `search_products`, `get_product_details`, `get_cart`, `set_cart_item`, `get_fulfillment_options`, `prepare_checkout`, and `submit_retail_order`.
+- Wholesale: `discover_products`, `get_wholesale_quote`, `get_draft_order`, `set_draft_order_item`, `get_delivery_terms`, `prepare_purchase_order`, and `submit_wholesale_order`.
+- Admin and supplier routes expose read-only operational snapshots for the consequences of each final mutation.
+
+### Safety and handoff semantics
+
+- The authoritative cart/draft is persisted in browser storage and rendered visibly.
+- A human UI edit records a fresh activity event; the UI explicitly tells the next agent step to begin with `get_cart` or `get_draft_order`.
+- Preparation is non-mutating. Final retail/wholesale submission requires prior visible human confirmation and an idempotency key.
+- Stock/reservations change only at final submission; repeated keys return the existing order instead of applying the mutation twice.
+- Retail validates product existence, exact quantities, stock, and delivery options. Wholesale validates MOQ, case-pack alignment, stock, price tier, and delivery-term availability.
+
+### Browser UI validation
+
+A same-session local browser run on 2026-09-01 exercised both top-level applications:
+
+1. Retail: added desk, chair, and lamp; manually changed the lamp from 1 to 2; prepared and confirmed checkout; submitted `RET-0001`; the retail operations page showed 1 confirmed order and a -4 unit stock delta.
+2. Wholesale: navigated to the distinct catalog; added 24 reflector units; manually changed the draft to 36; prepared and confirmed the PO; submitted `WHO-0001`; the supplier page showed 36 reserved units and the corresponding stock reduction.
+
+This Playwright run validates the visible application behavior only. Its normal browser correctly displayed `WebMCP no disponible en este navegador`; it is not evidence of native Site-tool discovery or execution.
+
+### Remaining acceptance blockers
+
+- The ChatGPT Desktop browser-control runtime still fails before connecting with `windows sandbox failed: helper_unknown_error: apply deny-read ACLs`. Therefore the Milestone 0 record remains FAIL/BLOCKED and no native Site-tool PASS claim is made.
+- A hosted public deployment and the required sub-three-minute demo video remain to be completed before a final challenge submission.
