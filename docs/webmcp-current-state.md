@@ -210,3 +210,21 @@ This Playwright run validates the visible application behavior only. Its normal 
 
 - The ChatGPT Desktop browser-control runtime still fails before connecting with `windows sandbox failed: helper_unknown_error: apply deny-read ACLs`. Therefore the Milestone 0 record remains FAIL/BLOCKED and no native Site-tool PASS claim is made.
 - A hosted public deployment and the required sub-three-minute demo video remain to be completed before a final challenge submission.
+
+
+## Hosting verification
+
+> Recorded: 2026-09-01  
+> Status: **PRODUCTION URL READY — native Site-tools verification still blocked**
+
+The demo is deployed to Vercel and connected to the public GitHub repository:
+
+- Production URL: https://webmcp-shared-control.vercel.app/
+- Judging routes: `/retail`, `/retail/admin`, `/wholesale`, `/wholesale/supplier`
+- Latest production deployment: `dpl_DgThKKyAVpcySYyx4oEbUC4W8e4K`
+- Latest source commit at deployment: `97f193c`
+- The static Vercel configuration fixes framework detection with `"framework": null` and an empty build command, then serves the root SPA through explicit route rewrites. A favicon rewrite was added after the first public browser check.
+
+External checks on 2026-09-01 returned HTTP 200 for the home page, all four judging routes, `app.js`, `styles.css`, and `favicon.ico`. Playwright loaded the public `/retail` page with the expected catalog, cart, and route navigation; the final console check reported zero errors and zero warnings.
+
+The public browser check is UI evidence only. It does not replace native Site-tools discovery/execution evidence: the normal browser still reports `WebMCP no disponible en este navegador`, and the ChatGPT Desktop browser-control runtime remains blocked as recorded above.
